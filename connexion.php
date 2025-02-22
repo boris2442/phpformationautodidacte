@@ -1,9 +1,18 @@
 <?php
-if (!empty($_POST)) {
+   if (!empty($_POST)) {
     if(isset($_POST["email"], $_POST["pass"])
      && (!empty($_POST["email"])) && (!empty($_POST["pass"]))){
-
+        $_SESSION["error"]=[ ];
+        if(strlen($pseudo <5)){
+            $_SESSION["error"]=   "le pseudo doit être superieur à 5 caractères";
+        }
        if(!filter($_POST["email"], FILTER_VALIDATE_EMAIL)){
+        $_SESSION["error"]=   "l'adresse mail est incorrecte";
+         
+     
+
+       
+
         die("email is not a valid email address");
        }
          include "./crud/index.php";
@@ -53,7 +62,7 @@ if (!empty($_POST)) {
         <textarea name="pass" id="pass"></textarea>
     </div>
 
-    <button type="submit">Me conecter</button>
+    <button type="submit">Me connecter</button>
 
 </form>
 

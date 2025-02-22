@@ -18,7 +18,7 @@ if (isset($_FILES["images"]) && $_FILES["images"]["error"] === 0) {
    $filetype=$_FILES["images"]["type"];
    $filesize=$_FILES["images"]["size"];
    //on verifie si la taille du fichier est inferieure a 1Mo
-   $extension=pathinfo($filename, PATHINFO_EXTENSION);
+   $extension = strtolower($filename, PATHINFO_EXTENSION);
    //on verifie si l'extention est autorise
    if(!array_key_exists($extension, $allowed)||(!in_array($filetype, $allowed))){
     //soit l'extension  soit le type est incorrect
@@ -36,9 +36,12 @@ if (isset($_FILES["images"]) && $_FILES["images"]["error"] === 0) {
 
 $newfilename=__DIR__."/uploads/".$newname.".".$extension;
 echo $newfilename;
+//on deplace le fichier de tmp a uploads en le renommant
 if(!move_uploaded_file($_FILES["images"]["tmp_name"], $newfilename)){
     die("une erreur est survenue lors de l'envoi du fichier");
 }
+
+//interdit l'execution du fichier a l'aide des permissions
 chmod($newfilename, 0644);
 
 
@@ -62,13 +65,13 @@ chmod($newfilename, 0644);
         <div class="">
             <label for="fichier">Fichier</label>
             <input type="file" name="images" id="fichier" multiple accept="">
-            <button type="submit">Envoyer</button>
+            <!-- <button type="submit">Envoyer</button> -->
         </div>
         <div class="">
             <label for="fichier">Fichier</label>
             <input type="file" name="files" id="fichier">
-            <button type="submit">Envoyer</button>
         </div>
+        <button type="submit">Envoyer</button>
     </form>
 </body>
 
