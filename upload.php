@@ -29,8 +29,17 @@ if (isset($_FILES["images"]) && $_FILES["images"]["error"] === 0) {
    if($filesize >2*1024*1024){
     die("la taille du fichier ne doit pas exceder 2mo ");
    }
-}
+   //on genere un nnom de fichier
+   $newname=md5(uniqid());
+   //on genere le chemin complet
+//   echo __DIR__;
 
+$newfilename=__DIR__."/uploads/".$newname.".".$extension;
+echo $newfilename;
+if(!move_uploaded_file($_FILES["images"]["tmp_name"], $newfilename)){
+    die("une erreur est survenue lors de l'envoi du fichier");
+}
+chmod($newfilename, 0644);
 
 
 ?>
@@ -60,14 +69,7 @@ if (isset($_FILES["images"]) && $_FILES["images"]["error"] === 0) {
             <input type="file" name="files" id="fichier">
             <button type="submit">Envoyer</button>
         </div>
-
-
-
-
-
-
-    </form
-        </body>
+    </form>
+</body>
 
 </html>
->
