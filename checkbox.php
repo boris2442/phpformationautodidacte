@@ -1,13 +1,20 @@
 <?php
-$ch=$_POST["ch"];
-$valider=$_POST["valider"];
+@$ch=$_POST["ch"];
+@$valider=$_POST["valider"];
 if(isset($valider)){
     echo "vous avez cocher les cases suivantes!</br>";
-    echo implode("")
+    echo @implode("-", $ch);
+    echo "<hr />";
+
+    //se connecter a la base
+
+    include_once "/crud/index.php";
+    //apres , on cree une table a deux dimensions, id et competences
+
+    // $requete= $db"INSERT INTO `competences` VALUES (?)";
+    $requete=$pdo->prepare("INSERT INTO `competences` VALUES (?)");
+    $requete->execute(array(implode("|", $ch)));
 }
-
-
-
 
 ?>
 
@@ -21,9 +28,9 @@ if(isset($valider)){
 </head>
 <body>
     <form action="" method="post">
-        <input type="checkbox" name="ch[]" id="" value="HTML">HTML</br>
-        <input type="checkbox" name="ch[]" id="" value="CSS">CSS</br>
-        <input type="checkbox" name="ch[]" id="" value="Javascript">Javascript</br>
+        <input type="checkbox" name="ch[]" id="" value="HTML" <?php if(@in_array("HTML", $ch)) echo "checked" ?>>HTML</br>
+        <input type="checkbox" name="ch[]" id="" value="CSS" <?php if(@in_array("CSS", $ch)) echo "checked" ?>>CSS</br>
+        <input type="checkbox" name="ch[]" id="" value="Javascript" <?php if(@in_array("Javascript", $ch)) echo "checked" ?>>Javascript</br>
         <input type="checkbox" name="Valider" id="" value="Envoyer">
 
     </form>
